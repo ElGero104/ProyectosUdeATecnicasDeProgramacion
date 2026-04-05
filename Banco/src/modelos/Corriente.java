@@ -2,7 +2,7 @@ package modelos;
 
 import java.text.DecimalFormat;
 
-public class Corriente extends Cuenta {
+public class Corriente extends Cuenta { /* Clase hija de Cuenta para representar una cuenta corriente */
 
     private double sobregiro;
 

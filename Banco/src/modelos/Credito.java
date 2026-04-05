@@ -57,8 +57,8 @@ public class Credito extends Cuenta {
 
     public boolean pagar(double valor) {
         if (valor > 0 && getSaldoDeuda() > 0) {
-            var intereses = getSaldoDeuda() * tasaInteres / 100;
-            var abonoCapital = valor - intereses;
+            double intereses = getSaldoDeuda() * tasaInteres / 100;
+            double abonoCapital = valor - intereses;
             return depositar(abonoCapital);
         }
         return false;
