@@ -2,7 +2,7 @@ package modelos;
 
 import java.text.DecimalFormat;
 
-public class Corriente extends Cuenta { /* Clase hija de Cuenta para representar una cuenta corriente */
+public class Corriente extends Cuenta {
 
     private double sobregiro;
 
@@ -34,6 +34,22 @@ public class Corriente extends Cuenta { /* Clase hija de Cuenta para representar
                 df.format(getSaldo()),
                 "Sobregiro " + df.format(sobregiro)
         };
+    }
+
+    @Override
+    public String toString() {
+        return "Corriente [Numero=" + getNumero() + ", Titular=" + getTitular() + "]";
+    }
+
+    @Override
+    public boolean procesarTransaccion(TipoTransaccion tipo, double valor) {
+        switch (tipo) {
+            case DEPOSITO:
+                return depositar(valor);
+            case RETIRO:
+                return retirar(valor);
+        }
+        return false;
     }
 
 }

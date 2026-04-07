@@ -57,8 +57,8 @@ public class Credito extends Cuenta {
 
     public boolean pagar(double valor) {
         if (valor > 0 && getSaldoDeuda() > 0) {
-            double intereses = getSaldoDeuda() * tasaInteres / 100;
-            double abonoCapital = valor - intereses;
+            var intereses = getSaldoDeuda() * tasaInteres / 100;
+            var abonoCapital = valor - intereses;
             return depositar(abonoCapital);
         }
         return false;
@@ -74,6 +74,27 @@ public class Credito extends Cuenta {
                 "Saldo Adeudado $"+df.format(getSaldoDeuda())+" Saldo Pagado $ "+df.format(getSaldo())+" Disponible Retiro $"+df.format(getDisponible()),
                 "Valor Préstamo $"+df.format(valorPrestado)+" Tasa Interés " + df.format(tasaInteres) + "% Plazo"+df.format(plazo)+" Cuota $"+df.format(getCuota())
         };
+    }
+
+    @Override
+    public String toString() {
+        return "Crédito [Numero=" + getNumero() + ", Titular=" + getTitular() + "]";
+    }
+
+    @Override
+    public boolean procesarTransaccion(TipoTransaccion tipo, double valor) {
+        switch (tipo) {
+            case DEPOSITO:
+                return pagar(valor);
+            case RETIRO:
+                return retirar(valor);
+        }
+        return false;
+    }
+
+    @Override
+    public double getSaldoPorTransaccion(TipoTransaccion tipo) {
+        return tipo==TipoTransaccion.RETIRO?getDisponible():getSaldoDeuda();
     }
 
 }
